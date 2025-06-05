@@ -89,7 +89,7 @@ class PAINT_OT_mio3sc_mask_from_selection(Mio3SclputOperator, Operator):
             obj.data.polygons.foreach_set("hide", p_sel.astype(np.uint8))
             multires = self.store_multires(obj)
             bpy.ops.paint.mask_flood_fill(mode="VALUE", value=0 if self.clear else 1)
-            bpy.ops.paint.hide_show_all(action="SHOW")
+            obj.data.polygons.foreach_set("hide", [False] * len(obj.data.polygons))
             self.restore_multires(multires)
         else:
             bm = bmesh.new()
@@ -151,7 +151,7 @@ class PAINT_OT_mio3sc_mask_from_vertex_group(Mio3SclputOperator, Operator):
             obj.data.polygons.foreach_set("hide", hide_p)
             multires = self.store_multires(obj)
             bpy.ops.paint.mask_flood_fill(mode="VALUE", value=0 if self.clear else 1)
-            bpy.ops.paint.hide_show_all(action="SHOW")
+            obj.data.polygons.foreach_set("hide", [False] * len(obj.data.polygons))
             self.restore_multires(multires)
         else:
             bm = bmesh.new()
