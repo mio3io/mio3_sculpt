@@ -1,0 +1,12 @@
+schema_version = "1.0.0"
+id = "mio3_sculpt"
+name = "Mio3 Sculpt"
+version = "0.1.0"
+tagline = "Sculpt Tools"
+maintainer = "Mio"
+type = "add-on"
+tags = ["Sculpt"]
+blender_version_min = "4.2.0"
+license = ["SPDX:GPL-3.0-or-later"]
+website = "https://github.com/mio3io/mio3_sculpt"
+copyright = ["2025 Mio"]
