@@ -143,7 +143,7 @@ class PAINT_OT_mio3sc_mask_from_vertex_group(Mio3SclputOperator, Operator):
 
         if self.use_multires(obj):
             v_len = len(obj.data.vertices)
-            hide_v = np.ones(v_len, dtype=np.uint8)
+            hide_v = np.ones(v_len)
             for v in obj.data.vertices:
                 if any(g.group == active_vg_index for g in v.groups):
                     hide_v[v.index] = 0
@@ -159,11 +159,16 @@ class PAINT_OT_mio3sc_mask_from_vertex_group(Mio3SclputOperator, Operator):
             bm.verts.ensure_lookup_table()
             mask_layer = self.get_maks_layer(bm)
             deform_layer = bm.verts.layers.deform.active
-            val = 0 if self.clear else 1
-            for v in bm.verts:
-                groups = v[deform_layer]
-                if active_vg_index in groups:
-                    v[mask_layer] = val
+            if self.clear:
+                for v in bm.verts:
+                    groups = v[deform_layer]
+                    if active_vg_index in groups:
+                        v[mask_layer] = 1 - groups[active_vg_index]
+            else:
+                for v in bm.verts:
+                    groups = v[deform_layer]
+                    if active_vg_index in groups:
+                        v[mask_layer] = groups[active_vg_index]
             bm.to_mesh(obj.data)
 
         if self.invert:
