@@ -209,6 +209,11 @@ class PAINT_PT_mio3sc_mask(Panel):
         op.value = 0
         op = row.operator("paint.mask_flood_fill", text="Invert")
         op.mode = "INVERT"
+        row = layout.row(align=True)
+        row.operator("sculpt.mask_filter", text="", icon="ADD").filter_type = "GROW"
+        row.operator("sculpt.mask_filter", text="", icon="REMOVE").filter_type = "SHRINK"
+        row.operator("sculpt.mask_filter", text="Smooth").filter_type = "SMOOTH"
+        row.operator("sculpt.mask_filter", text="Sharp").filter_type = "SHARPEN"
 
 
 classes = [
@@ -226,6 +231,11 @@ translation_dict = {
         ("*", "Create mask from active vertex group\n[Shift] Add\n[Alt] Remove\n[Ctrl] Invert"):
             "アクティブな頂点グループからマスクを作成\n[Shift] 追加\n[Alt] 削除\n[Ctrl] 反転",
         ("*", "Fill with or clear a mask"): "マスクを塗りつぶすかクリアする",
+        ("Operator", "Assign Mask"): "割り当て",
+        ("Operator", "Remove Mask"): "解除",
+        ("Operator", "Use"): "使用",
+        ("Operator", "Sharp"): "シャープ",
+
     }
 }  # fmt: skip
 
