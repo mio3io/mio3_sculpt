@@ -37,23 +37,6 @@ class Mio3SclputOperator(Mio3Debug):
                 return True
         return False
 
-    @staticmethod
-    def store_multires(obj):
-        multires = None
-        for mod in obj.modifiers:
-            if mod.type == "MULTIRES":
-                multires = (mod, int(mod.sculpt_levels))
-                break
-        obj.data.update()
-        return multires
-
-    @staticmethod
-    def restore_multires(multires):
-        pass
-        # if multires is not None:
-        #     mod, sculpt_levels = multires
-        #     mod.sculpt_levels = sculpt_levels
-
 
 class PAINT_OT_mio3sc_mask_from_selection(Mio3SclputOperator, Operator):
     bl_idname = "paint.mio3sc_mask_from_selection"
@@ -191,12 +174,13 @@ class PAINT_PT_mio3sc_mask(Panel):
         layout = self.layout
         col = layout.column(align=True)
         split = col.split(factor=0.68, align=True)
-        split.operator("paint.mio3sc_mask_from_selection")
+        split.operator("paint.mio3sc_mask_from_selection", icon="MESH_DATA")
         split.operator("paint.mio3sc_mask_from_selection", text="Add").add = True
         split = col.split(factor=0.68, align=True)
-        split.operator("paint.mio3sc_mask_from_vertex_group")
+        split.operator("paint.mio3sc_mask_from_vertex_group", icon="GROUP_VERTEX")
         split.operator("paint.mio3sc_mask_from_vertex_group", text="Add").add = True
-        row = layout.row(align=True)
+
+        row = col.row(align=True)
         op = row.operator("paint.mask_flood_fill", text="Fill")
         op.mode = "VALUE"
         op.value = 1
@@ -205,6 +189,7 @@ class PAINT_PT_mio3sc_mask(Panel):
         op.value = 0
         op = row.operator("paint.mask_flood_fill", text="Invert")
         op.mode = "INVERT"
+
         row = layout.row(align=True)
         row.operator("sculpt.mask_filter", text="", icon="ADD").filter_type = "GROW"
         row.operator("sculpt.mask_filter", text="", icon="REMOVE").filter_type = "SHRINK"
